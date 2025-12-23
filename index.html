@@ -1,1 +1,203 @@
-Hello!
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sorsjegy érvényesítése...</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Serif+4&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: serif;
+      color: #2c2c2c;
+      background:
+        url("bg.jpg");
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .screen {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    /* Loader */
+    .loader-text {
+      font-size: 1.2rem;
+      opacity: 0.7;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    /* NYERTÉL */
+    .win {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: #b89b5e;
+      margin-bottom: 20px;
+      animation: pop 5s ease-out forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+
+    /* Reveal content */
+    .reveal div {
+      margin: 12px 0;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeIn 4s forwards;
+    }
+
+    .reveal div:nth-child(1) { animation-delay: 1s; }
+    .reveal div:nth-child(2) { animation-delay: 3s; }
+    .reveal div:nth-child(3) { animation-delay: 5s; }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Personal message */
+    .message {
+      max-width: 600px;
+      margin-top: 40px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .signature {
+      margin-top: 20px;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.6rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    /* Snow */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: #aaa;
+      font-size: 1em;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background music -->
+<audio id="bg-music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_3c3d6c4a8d.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SCREEN 1: Loader -->
+<div id="screen1" class="screen active">
+  <div class="loader-text">
+    Sorsjegy ellenőrzése folyamatban…<br>
+    Érvényesség vizsgálata…
+  </div>
+</div>
+
+<!-- SCREEN 2: WIN -->
+<div id="screen2" class="screen">
+  <div class="win">ÖN NYERT!</div>
+</div>
+
+<!-- SCREEN 3: Reveal -->
+<div id="screen3" class="screen reveal">
+  <div class="message">
+    <h4>AZ ÖN NYEREMÉNYE</h4><br>
+  </div>
+
+  <div class="message">
+    1 év időutazás a magyar múltban
+    <h3>Arcanum Digitális Tudománytár</h3>
+    Teljes hozzáférés – 12 hónapig
+  </div>
+
+  <div class="message">
+    Tudom, mennyire szeretsz elmélyülni történetekben,<br>
+    elveszni a múlt apró részleteiben.<br>
+    Remélem, ez az egy év sok örömet ad majd.
+    <div class="signature">Róbert</div>
+    Kellemes karácsonyi ünnepeket!
+  </div>
+</div>
+
+<script>
+  const music = document.getElementById("bg-music");
+
+  function startMusic() {
+    music.volume = 0.25;
+    music.play().catch(()=>{});
+    document.removeEventListener("click", startMusic);
+  }
+
+  document.addEventListener("click", startMusic);
+
+  setTimeout(() => {
+    screen1.classList.remove("active");
+    screen2.classList.add("active");
+  }, 6000);
+
+  setTimeout(() => {
+    screen2.classList.remove("active");
+    screen3.classList.add("active");
+  }, 10000);
+
+  // Snowflakes
+  for (let i = 0; i < 25; i++) {
+    const snow = document.createElement("div");
+    snow.className = "snowflake";
+    snow.innerText = "❄";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.animationDuration = (5 + Math.random() * 5) + "s";
+    snow.style.fontSize = (10 + Math.random() * 10) + "px";
+    document.body.appendChild(snow);
+  }
+</script>
+
+</body>
+</html>
