@@ -167,15 +167,6 @@
 </div>
 
 <script>
-  const music = document.getElementById("bg-music");
-
-  function startMusic() {
-    music.volume = 0.25;
-    music.play().catch(()=>{});
-    document.removeEventListener("click", startMusic);
-  }
-
-  document.addEventListener("click", startMusic);
 
   setTimeout(() => {
     screen1.classList.remove("active");
